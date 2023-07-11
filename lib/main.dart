@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:stock_predictor/NavBar.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -21,17 +21,18 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset : false,
+      drawer: NavBar(),
       appBar: AppBar(
-          backgroundColor: Colors.black, systemOverlayStyle: SystemUiOverlayStyle.light,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.menu, color: Colors.white,),
-            onPressed: () {},
-          ),
-        ),
-      
+        backgroundColor: Colors.black, systemOverlayStyle: SystemUiOverlayStyle.light,
+        /*leading: IconButton(
+          icon: Icon(Icons.menu, color: Colors.white,),
+          onPressed: () {},
+        ),*/
+      ),
+
       body: Container(
         decoration: BoxDecoration(
+          color: Colors.blue,
           image: DecorationImage(
             image:AssetImage('assets/images/three.jpg'),
               fit: BoxFit.fill
