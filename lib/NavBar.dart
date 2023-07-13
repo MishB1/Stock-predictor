@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -30,34 +30,54 @@ class NavBar extends StatelessWidget {
           ),
           SizedBox(height: 30,),
           ListTile(
-            leading: Icon(Icons.favorite, color: Colors.lightBlue,),
+            leading: Icon(Icons.favorite_outline, color: Colors.lightBlue,),
             title: Text('Favorites'),
-            onTap: () => null,
+            onTap: () {},  
           ),
           SizedBox(height: 10,),
           ListTile(
-            leading: Icon(Icons.share, color: Colors.lightBlue,),
+            leading: Icon(Icons.share_outlined, color: Colors.lightBlue,),
             title: Text('Share with Friends'),
-            onTap: () => null,
+            onTap: () {},
           ),
           SizedBox(height: 10,),
           ListTile(
-            leading: Icon(Icons.person, color: Colors.lightBlue,),
+            leading: Icon(Icons.newspaper_outlined, color: Colors.lightBlue,),
+            title: Text('News'),
+            onTap: () {},
+          ),
+          SizedBox(height: 10,),
+          ListTile(
+            leading: Icon(Icons.notifications_outlined, color: Colors.lightBlue,),
+            title: Text('Notifications'),
+            onTap: () {},
+          ),
+          SizedBox(height: 10,),
+          ListTile(
+            leading: Icon(Icons.person_outline, color: Colors.lightBlue,),
             title: Text('About'),
-            onTap: () => null,
+            onTap: () {},
           ),
-          SizedBox(height: 10,),
-          ListTile(
-            leading: Icon(Icons.settings, color: Colors.lightBlue,),
-            title: Text('Settings'),
-            onTap: () => null,
-          ),
+          
           SizedBox(height: 10,),
           Divider(),
+          SizedBox(height: 10,),
+          ListTile(
+            leading: Icon(Icons.settings_outlined, color: Colors.lightBlue,),
+            title: Text('Settings'),
+            onTap: () {},
+          ),
+          SizedBox(height: 10,),
+          ListTile(
+            leading: Icon(Icons.update_outlined, color: Colors.lightBlue,),
+            title: Text('Updates'),
+            onTap: () {},
+          ),
+          SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Colors.lightBlue,),
             title: Text('Exit'),
-            onTap: () => null,
+            onTap: () {},
           ),
         ],
       ),

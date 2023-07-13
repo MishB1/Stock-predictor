@@ -4,8 +4,8 @@ import 'package:stock_predictor/NavBar.dart';
 
 void main() => runApp(
   MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: Homepage(),
+    debugShowCheckedModeBanner: false,
+    home: Homepage(),
   )
 );
 
@@ -24,10 +24,6 @@ class _HomepageState extends State<Homepage> {
       drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black, systemOverlayStyle: SystemUiOverlayStyle.light,
-        /*leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.white,),
-          onPressed: () {},
-        ),*/
       ),
 
       body: Container(
@@ -62,8 +58,8 @@ class _HomepageState extends State<Homepage> {
                     ),
                   ),
                 ] 
-            ),
-           )
+              ),
+            )
           ],
         ),
       ),
