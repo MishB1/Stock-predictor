@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stock_predictor/NavBar.dart';
+import 'package:stock_predictor/screens/aboutScreen.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -62,6 +63,14 @@ class _HomepageState extends State<Homepage> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return aboutScreen();
+          })
+          );
+        }
       ),
     );  
   }
