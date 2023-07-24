@@ -1,4 +1,10 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:stock_predictor/screens/News/news.dart';
+import 'package:stock_predictor/screens/Notificattions/notifications.dart';
+import 'package:stock_predictor/screens/SettingsPage/settings.dart';
+import 'package:stock_predictor/screens/Share/sharePage.dart';
+import 'package:stock_predictor/screens/UpdatesPage/updates.dart';
+import 'package:stock_predictor/screens/about/aboutScreen.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -28,51 +34,88 @@ class NavBar extends StatelessWidget {
               )
             ),
           ),
+
           SizedBox(height: 30,),
           ListTile(
             leading: Icon(Icons.favorite_outline, color: Colors.lightBlue,),
             title: Text('Favorites'),
             onTap: () {},  
           ),
+
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.share_outlined, color: Colors.lightBlue,),
             title: Text('Share with Friends'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SharePage()),
+             );
+            },
           ),
+
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.newspaper_outlined, color: Colors.lightBlue,),
             title: Text('News'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewsScreen()),
+             );
+            },
           ),
+
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.notifications_outlined, color: Colors.lightBlue,),
             title: Text('Notifications'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotificationsScreen()),
+             );
+            },
           ),
+
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.person_outline, color: Colors.lightBlue,),
             title: Text('About'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => aboutScreen()),
+             );
+            },
           ),
-          
+
           SizedBox(height: 10,),
           Divider(),
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.settings_outlined, color: Colors.lightBlue,),
             title: Text('Settings'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+             );
+            },
           ),
+
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.update_outlined, color: Colors.lightBlue,),
             title: Text('Updates'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UpdatesPage()),
+             );
+            },
           ),
+          
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Colors.lightBlue,),

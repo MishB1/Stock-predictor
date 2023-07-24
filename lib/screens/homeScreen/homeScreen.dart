@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stock_predictor/screens/NavBar/NavBar.dart';
+// ignore: unused_import
 import 'package:stock_predictor/screens/about/aboutScreen.dart';
 
 
@@ -60,15 +61,6 @@ class _AppState extends State<homeScreen> {
             )
           ],
         ),
-      ),
-      
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return aboutScreen();
-          })
-          );
-        }
       ),
     );  
   }

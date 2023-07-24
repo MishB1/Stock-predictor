@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/homeScreen/homeScreen.dart';
+import 'package:stock_predictor/screens/splashScreen/splashscreen.dart';
+import 'screens/HomeScreen/homeScreen.dart';
+
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -10,9 +12,9 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Stock Predictor',
       initialRoute: homeScreen.routeName,
-      routes: {        
+      routes: {  
+        splashScreen.routeName: (context) => const splashScreen(),      
         homeScreen.routeName: (context) => const homeScreen(),
-        //Splash.routeName: (context) => const Splash(),
         //LoginOptions.routeName: (context) => const LoginOptions(),
        // Calpager.routeName: (context) => const Calpager(),       
       },
