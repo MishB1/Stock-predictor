@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stock_predictor/screens/NavBar/NavBar.dart';
-// ignore: unused_import
-import 'package:stock_predictor/screens/about/aboutScreen.dart';
+
 
 
 
 class homeScreen extends StatefulWidget {
-  static const String routeName = '/intro';
-  
   const homeScreen({super.key});
+
+  static const String routeName = '/intro';
 
   @override
   State<homeScreen> createState() => _AppState();
@@ -46,6 +45,7 @@ class _AppState extends State<homeScreen> {
                   Text('Predictor', style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
                   TextField(
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.5, color: Colors.white),
