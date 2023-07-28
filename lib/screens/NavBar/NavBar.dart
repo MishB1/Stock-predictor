@@ -7,14 +7,15 @@ import 'package:stock_predictor/screens/about/aboutScreen.dart';
 import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 
-
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
-  final String shareText = 'Check out the Stock Prediction App! 📈🚀';
-  void closeAppUsingSystemPop() {
-    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 
+  final String shareText = 'Check out the Stock Prediction App! 📈🚀';
+
+  void closeApp() {
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
+
   @override
   Widget build(BuildContext context) {
     return  Drawer(
@@ -123,7 +124,7 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Colors.lightBlue,),
             title: Text('Exit'),
-            onTap: () {closeAppUsingSystemPop();},
+            onTap: () {closeApp();},
           ),
         ],
       ),

@@ -4,7 +4,6 @@ import 'package:stock_predictor/screens/NavBar/NavBar.dart';
 
 
 
-
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
 
@@ -15,11 +14,16 @@ class homeScreen extends StatefulWidget {
 }
 
 class _AppState extends State<homeScreen> {
+
+  final _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset : false,
+
       drawer: NavBar(),
+     
       appBar: AppBar(
         backgroundColor: Colors.black, systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
@@ -45,13 +49,19 @@ class _AppState extends State<homeScreen> {
                   Text('Predictor', style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20,),
                   TextField(
+                    controller: _textController,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.5, color: Colors.white),
+                        borderSide: BorderSide(width: 1.0, color: Colors.white),
                         borderRadius: BorderRadius.circular(50.0),
                       ),
-                      prefixIcon:   Icon(Icons.search, color: Colors.white,),
+                      prefixIcon: Icon(Icons.search, color: Colors.white,),
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          _textController.clear();
+                        }, 
+                        icon: Icon(Icons.clear, color: Colors.white,)),
                       hintText: "Search your stock here...",
                       hintStyle: TextStyle(color: Colors.white, fontSize: 15)
                     ),
