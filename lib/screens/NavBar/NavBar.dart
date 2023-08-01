@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_predictor/screens/News/news.dart';
 import 'package:stock_predictor/screens/Notificattions/notifications.dart';
@@ -5,15 +6,14 @@ import 'package:stock_predictor/screens/SettingsPage/settings.dart';
 import 'package:stock_predictor/screens/UpdatesPage/updates.dart';
 import 'package:stock_predictor/screens/about/aboutScreen.dart';
 import 'package:share/share.dart';
-import 'package:flutter/services.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
 
   final String shareText = 'Check out the Stock Prediction App! 📈🚀';
 
-  void closeApp() {
-    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  void signOut() {
+    FirebaseAuth.instance.signOut();
   }
 
   @override
@@ -123,8 +123,8 @@ class NavBar extends StatelessWidget {
           SizedBox(height: 10,),
           ListTile(
             leading: Icon(Icons.exit_to_app, color: Colors.lightBlue,),
-            title: Text('Exit'),
-            onTap: () {closeApp();},
+            title: Text('SignOut'),
+            onTap: () {signOut();},
           ),
         ],
       ),
