@@ -68,7 +68,7 @@ void signUp() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.deepPurple,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -88,7 +88,7 @@ void signUp() async {
                   //welcome back message
                   Text("Let's create an account for you",
                   style: TextStyle(
-                          color: Colors.grey[700]
+                          color: Colors.white
                         ),),
                   SizedBox(height: 25,),
                       
@@ -130,7 +130,7 @@ void signUp() async {
                     children: [
                       Text("Already have an account?",
                         style: TextStyle(
-                          color: Colors.grey[700]
+                          color: Colors.white
                         ),
                       ),
             

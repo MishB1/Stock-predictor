@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.deepPurple,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   //welcome back message
                   Text("Welcome back, you've been missed!",
                   style: TextStyle(
-                          color: Colors.grey[700]
+                          color: Colors.white
                         ),),
                   SizedBox(height: 25,),
                       
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text("Not a member?",
                         style: TextStyle(
-                          color: Colors.grey[700]
+                          color: Colors.white
                         ),
                       ),
                       
