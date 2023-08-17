@@ -1,51 +1,43 @@
 name: stock_predictor
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
-
+  sdk: '>=3.0.2 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-
-  
   cupertino_icons: ^1.0.2
   firebase_core: ^2.15.0
   firebase_auth: ^4.7.2
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.1"
-
+  flutter_launcher_icons: '^0.13.1'
 
   flutter_lints: ^2.0.0
   shared_preferences: ^2.0.11
   share: ^2.0.3
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: 'launcher_icon'
   ios: true
-  image_path: "assets/images/logo.png"
-  
+  image_path: 'assets/images/logo.png'
 
 flutter:
-
-  
   uses-material-design: true
 
-  
   assets:
-  - assets/images/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
-  
   #fonts:
   #   - family: Schyler
   #     fonts:
@@ -58,4 +50,3 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  

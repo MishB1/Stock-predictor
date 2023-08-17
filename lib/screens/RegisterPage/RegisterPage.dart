@@ -1,33 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_predictor/screens/homeScreen/homeScreen.dart';
 import '../../components/loginButton.dart';
 import '../../components/logInTextField.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
-  const RegisterPage({
-    super.key,
-    required this.onTap
-  });
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
- // text editing controllers
+  bool isPasswordVisible = false;
+  bool isPasswordConfirmationVisible = false;
+  // text editing controllers
   final emailTextController = TextEditingController();
-  final passwordTextController =  TextEditingController();
+  final passwordTextController = TextEditingController();
   final confirmPasswordTextController = TextEditingController();
 
-void signUp() async {
-
+  void signUp() async {
     //show loading circle
-    showDialog(context: context, 
-    builder: (context) => Center(
-      child: CircularProgressIndicator(),
-    )
-    );
+    showDialog(
+        context: context,
+        builder: (context) => Center(
+              child: CircularProgressIndicator(),
+            ));
 
     //make sure passwords work first
     if (passwordTextController.text != confirmPasswordTextController.text) {
@@ -38,18 +36,22 @@ void signUp() async {
       return;
     }
 
-
     //try sign in
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailTextController.text, 
+        email: emailTextController.text,
         password: passwordTextController.text,
       );
 
       //pop loading circle
-      if (context.mounted) Navigator.pop(context);
+      if (!mounted) return;
+      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
     } on FirebaseAuthException catch (error) {
-
       //pop loading circle
       Navigator.pop(context);
       displayMessage(error.code);
@@ -58,101 +60,163 @@ void signUp() async {
 
   //display a dialogue message
   void displayMessage(String message) {
-    showDialog(context: context, 
-    builder: (context) => AlertDialog(
-      title: Text(message),
-    ),
-  );
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // logo
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                                                              
-                  // logo
-                  Icon(
-                    Icons.lock,
-                    size: 100,
+                  Text(
+                    'Create Account',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 50,),
-                  
-                  //welcome back message
-                  Text("Let's create an account for you",
-                  style: TextStyle(
-                          color: Colors.white
-                        ),),
-                  SizedBox(height: 25,),
-                      
+                  SizedBox(height: 10),
+                  Text(
+                    "Connect with your friends today!",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(height: 50),
+
+                  Text(
+                    'Email Address',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
                   // email textfield
                   MyTextField(
-                    controller: emailTextController, 
-                    hintText: 'Email', 
+                    controller: emailTextController,
+                    hintText: 'Email',
                     obscureText: false,
                   ),
-                  
-                   SizedBox(height: 10,),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Text(
+                    'Password',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
                   // password texttfield
+
                   MyTextField(
-                    controller: passwordTextController, 
-                    hintText: 'Password', 
-                    obscureText: true,
+                    controller: passwordTextController,
+                    hintText: 'Password',
+                    obscureText: !isPasswordVisible,
+                    icon: isPasswordVisible == true
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordVisible = false;
+                              });
+                            },
+                            child: Icon(
+                              Icons.visibility_off_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordVisible = true;
+                              });
+                              print('object');
+                            },
+                            child: Icon(
+                              Icons.visibility_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
-                  
-                  SizedBox(height: 10,),
-                  // confirm password texttfield
+                  SizedBox(height: 20),
+                  Text(
+                    'Password',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+
                   MyTextField(
-                    controller: confirmPasswordTextController, 
-                    hintText: 'Confirm Password', 
-                    obscureText: true,
+                    controller: confirmPasswordTextController,
+                    hintText: 'Confirm Password',
+                    obscureText: isPasswordConfirmationVisible,
+                    icon: isPasswordConfirmationVisible == true
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordConfirmationVisible = false;
+                              });
+                            },
+                            child: Icon(
+                              Icons.visibility_off_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordConfirmationVisible = true;
+                              });
+                              print('object');
+                            },
+                            child: Icon(
+                              Icons.visibility_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
-            
-                   SizedBox(height: 25),
-                   
-                   //sign in button
-                   MyButton(
-                    onTap: signUp, 
-                    text: 'Sign Up'
-                  ),
-                   
-                  SizedBox(height: 25),
-                  // go to register page
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Already have an account?",
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-            
-                      SizedBox(width: 4),
-            
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: Text("Login now", 
-                        style:TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                        ),
-                      ),
-                    ],
-                  )
+
+                  SizedBox(height: 30),
+
+                  MyButton(onTap: signUp, text: 'Sign Up'),
                 ],
               ),
-            ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account?",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
     );
   }
-}  
+}

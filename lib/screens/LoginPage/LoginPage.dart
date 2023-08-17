@@ -1,54 +1,48 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_predictor/auth/login_or_register.dart';
 import 'package:stock_predictor/components/loginButton.dart';
 import 'package:stock_predictor/components/logInTextField.dart';
+import 'package:stock_predictor/screens/RegisterPage/RegisterPage.dart';
+import 'package:stock_predictor/screens/homeScreen/homeScreen.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginOrRegister()), // use MaterialApp
-  );
-
-
-}
 class LoginPage extends StatefulWidget {
-  final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
-    
+  const LoginPage({super.key});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-
+  bool isPasswordVisible = false;
   // text editing controllers
   final emailTextController = TextEditingController();
-  final passwordTextController =  TextEditingController();
+  final passwordTextController = TextEditingController();
 
   //sign in user
   void signIn() async {
-
     //show loading circle
-    showDialog(context: context, 
-    builder: (context) => Center(
-      child: CircularProgressIndicator(),
-    )
-    );
-
+    showDialog(
+        context: context,
+        builder: (context) => Center(
+              child: CircularProgressIndicator(),
+            ));
 
     //try sign in
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailTextController.text, 
+        email: emailTextController.text,
         password: passwordTextController.text,
       );
 
       //pop loading circle
-      if (context.mounted) Navigator.pop(context);
+      if (!mounted) return;
+      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
     } on FirebaseAuthException catch (error) {
-
       //pop loading circle
       Navigator.pop(context);
       displayMessage(error.code);
@@ -57,94 +51,132 @@ class _LoginPageState extends State<LoginPage> {
 
   //display a dialogue message
   void displayMessage(String message) {
-    showDialog(context: context, 
-    builder: (context) => AlertDialog(
-      title: Text(message),
-    ),
-  );
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+      ),
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // logo
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                                                              
-                  // logo
-                  Icon(
-                    Icons.lock,
-                    size: 100,
+                  Text(
+                    'Hi, Welcome Back!👋',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 50,),
-                  
-                  //welcome back message
-                  Text("Welcome back, you've been missed!",
-                  style: TextStyle(
-                          color: Colors.white
-                        ),),
-                  SizedBox(height: 25,),
-                      
+                  SizedBox(height: 10),
+                  Text(
+                    "Hello again, you've been missed!",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(height: 50),
+
+                  Text(
+                    'Email Address',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
                   // email textfield
                   MyTextField(
-                    controller: emailTextController, 
-                    hintText: 'Email', 
+                    controller: emailTextController,
+                    hintText: 'Email',
                     obscureText: false,
                   ),
-                  
-                   SizedBox(height: 10,),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Text(
+                    'Password',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
                   // password texttfield
+
                   MyTextField(
-                    controller: passwordTextController, 
-                    hintText: 'Password', 
-                    obscureText: true,
+                    controller: passwordTextController,
+                    hintText: 'Password',
+                    obscureText: !isPasswordVisible,
+                    icon: isPasswordVisible == true
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordVisible = false;
+                              });
+                            },
+                            child: Icon(
+                              Icons.visibility_off_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPasswordVisible = true;
+                              });
+                              print('object');
+                            },
+                            child: Icon(
+                              Icons.visibility_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
-            
-                   SizedBox(height: 25),
-                   
-                   //sign in button
-                   MyButton(
-                    onTap: signIn, 
-                    text: 'Sign In'
-                  ),
-                   
-                  SizedBox(height: 25),
-                  // go to register page
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Not a member?",
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      
-                      SizedBox(width: 4),
-            
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: Text("Register now", 
-                        style:TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                        ),
-                      ),
-                    ],
-                  )
+
+                  SizedBox(height: 30),
+
+                  //sign in button
+                  MyButton(onTap: signIn, text: 'Sign In'),
                 ],
               ),
-            ),
+
+              // go to register page
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(),
+                      ),
+                    ),
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
     );
   }
-}  
+}

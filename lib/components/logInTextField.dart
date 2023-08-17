@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final Widget? icon;
   final String hintText;
   final bool obscureText;
+  final TextEditingController controller;
 
-  const MyTextField({
-    super.key, 
-    required this.controller, 
-    required this.hintText, 
-    required this.obscureText
-  });
+  const MyTextField(
+      {super.key,
+      this.icon,
+      required this.controller,
+      required this.hintText,
+      required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(7)
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey[500]),
+          suffix: icon,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(7)
-        ),
-        fillColor: Colors.grey.shade200, 
-        filled: true,
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey[500])
       ),
     );
   }

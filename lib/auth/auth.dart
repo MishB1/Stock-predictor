@@ -1,27 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_predictor/auth/login_or_register.dart';
-import 'package:stock_predictor/screens/HomeScreen/homeScreen.dart';
+import 'package:stock_predictor/firebase_options.dart';
+import 'package:stock_predictor/screens/LoginPage/LoginPage.dart';
+import 'package:stock_predictor/screens/homeScreen/homeScreen.dart';
 
-class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
+class Auth extends StatelessWidget {
+  const Auth({super.key});
+
+  Future<User?> checkUserStatus() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    return user;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
+    return FutureBuilder(
+        future: checkUserStatus(),
         builder: (context, snapshot) {
-          // user is logged in
           if (snapshot.hasData) {
-            return homeScreen();
+            return snapshot.data != null ? HomeScreen() : LoginPage();
           }
-          // user not logged in
-          else {
-            return LoginOrRegister();
-          }
-        }
-      ),
-    );
+          return Scaffold(
+            backgroundColor: Colors.black,
+          );
+        });
   }
 }

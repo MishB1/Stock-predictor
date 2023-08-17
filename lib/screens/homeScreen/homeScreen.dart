@@ -1,78 +1,155 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:stock_predictor/screens/NavBar/NavBar.dart';
+import 'package:stock_predictor/models/news_model.dart';
+import 'package:stock_predictor/news/news.dart';
 
-
-
-class homeScreen extends StatefulWidget {
-  const homeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   static const String routeName = '/intro';
 
   @override
-  State<homeScreen> createState() => _AppState();
+  State<HomeScreen> createState() => _AppState();
 }
 
-class _AppState extends State<homeScreen> {
-
+class _AppState extends State<HomeScreen> {
   final _textController = TextEditingController();
+  List<News> news = [];
+  List<Color> colors = [Colors.black, Colors.teal, Colors.blueAccent];
+
+  setNews() async {
+    news = await getTopNews();
+  }
+
+  @override
+  void initState() {
+    setNews();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
-
-      drawer: NavBar(),
-     
+      backgroundColor: Colors.white,
+      // resizeToAvoidBottomInset: false,
+      // drawer: NavBar(),
       appBar: AppBar(
-        backgroundColor: Colors.black, systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.blue,
-          image: DecorationImage(
-            image:AssetImage('assets/images/three.jpg'),
-              fit: BoxFit.fill
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        title: Text(
+          'Market Trends',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w800,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Stock', style: TextStyle(color: Colors.white, fontSize: 30),) ,
-                  SizedBox(height: 2,),
-                  Text('Predictor', style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 20,),
-                  TextField(
-                    controller: _textController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.0, color: Colors.white),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                      prefixIcon: Icon(Icons.search, color: Colors.white,),
-                      suffixIcon: IconButton(
-                        onPressed: (){
-                          _textController.clear();
-                        }, 
-                        icon: Icon(Icons.clear, color: Colors.white,)),
-                      hintText: "Search your stock here...",
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
-                  ),
-                ] 
-              ),
-            )
-          ],
-        ),
       ),
-    );  
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.all(20.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                'Trending News',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade400,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                  height: 130,
+                  child: ListView.builder(
+                    itemCount: 3,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 300,
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: colors[index],
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(0, 3),
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 6,
+                                  spreadRadius: 1,
+                                ),
+                              ]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                news[index].title,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Source: ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    news[index].source,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+              TextField(
+                controller: _textController,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1.0, color: Colors.white),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          _textController.clear();
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.white,
+                        )),
+                    hintText: "Search your stock here...",
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 15)),
+              ),
+            ]),
+          )
+        ],
+      ),
+    );
   }
-  
 }

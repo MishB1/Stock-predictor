@@ -1,17 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'auth/auth.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_predictor/auth/auth.dart';
 
-
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp( const App());
-}
 
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -19,9 +13,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AuthPage(),
+      home: Auth(),
       debugShowCheckedModeBanner: false,
       title: 'Stock Predictor',
     );
   }
-}  
+}
