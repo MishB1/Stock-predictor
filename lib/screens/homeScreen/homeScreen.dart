@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _AppState extends State<HomeScreen> {
   final _textController = TextEditingController();
-  List<News> news = [];
+  List<News>? news;
   List<Color> colors = [Colors.black, Colors.teal, Colors.blueAccent];
 
   setNews() async {
@@ -63,7 +63,7 @@ class _AppState extends State<HomeScreen> {
                 height: 20,
               ),
               SizedBox(
-                  height: 130,
+                  height: 180,
                   child: ListView.builder(
                     itemCount: 3,
                     shrinkWrap: true,
@@ -90,7 +90,7 @@ class _AppState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                news[index].title,
+                                news?[index].title ?? '',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -108,7 +108,7 @@ class _AppState extends State<HomeScreen> {
                                     ),
                                   ),
                                   Text(
-                                    news[index].source,
+                                    news?[index].source ?? '',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
