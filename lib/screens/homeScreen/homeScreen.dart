@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stock_predictor/components/favoriteStockWidget.dart';
 import 'package:stock_predictor/models/favorite_stock_model.dart';
 import 'package:stock_predictor/models/news_model.dart';
 import 'package:stock_predictor/news/news.dart';
@@ -9,7 +8,8 @@ import 'package:stock_predictor/screens/News/news.dart';
 import 'package:stock_predictor/screens/SettingsPage/settings.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int? pageIndex;
+  const HomeScreen({super.key, this.pageIndex});
 
   static const String routeName = '/intro';
 
@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _AppState extends State<HomeScreen> {
-  final _textController = TextEditingController();
+  // final _textController = TextEditingController();
 
   int currentIndex = 0;
 
@@ -55,8 +55,15 @@ class _AppState extends State<HomeScreen> {
     news = await getTopNews();
   }
 
+  setPageIndex() {
+    setState(() {
+      currentIndex = widget.pageIndex ?? 0;
+    });
+  }
+
   @override
   void initState() {
+    setPageIndex();
     setNews();
     super.initState();
   }
@@ -93,18 +100,6 @@ class _AppState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       // resizeToAvoidBottomInset: false,
       // drawer: NavBar(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        title: Text(
-          'Market Trends',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
       body: pages.elementAt(currentIndex),
       bottomNavigationBar: BottomNavBar(
           items: navBarItems,

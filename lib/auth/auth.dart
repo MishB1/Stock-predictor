@@ -23,8 +23,12 @@ class Auth extends StatelessWidget {
     return FutureBuilder(
         future: checkUserStatus(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data != null ? HomeScreen() : LoginPage();
+          if (snapshot.connectionState == ConnectionState.done) {
+            return snapshot.data != null
+                ? HomeScreen(
+                    pageIndex: 1,
+                  )
+                : LoginPage();
           }
           return Scaffold(
             backgroundColor: Colors.black,

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 
-
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
 
@@ -9,14 +8,15 @@ class NewsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title:  Text('News'),
-        centerTitle: true,
+        elevation: 0,
+        title: Text('News'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text(
             'Stay Informed with the Latest News!\n\n'
             'Our Stock Prediction App brings you up-to-date news about the companies and industries you care about. We curate relevant and timely articles, so you can make informed decisions and stay ahead of the curve.\n\n'
             'Key Features of News:\n'
@@ -28,14 +28,9 @@ class NewsScreen extends StatelessWidget {
             'With our comprehensive news coverage and accurate predictions, you will have a well-rounded view of the market and be equipped to navigate it successfully.\n\n'
             'Happy trading!',
             textAlign: TextAlign.center,
-            ),
           ),
         ),
+      ),
     );
   }
 }
-
-
-       
-        
-     
