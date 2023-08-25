@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:stock_predictor/screens/News/news.dart';
+import 'package:stock_predictor/screens/Stocks/trending_stocks.dart';
 import 'package:stock_predictor/screens/Notificattions/notifications.dart';
 import 'package:stock_predictor/screens/SettingsPage/settings.dart';
 import 'package:stock_predictor/screens/UpdatesPage/updates.dart';

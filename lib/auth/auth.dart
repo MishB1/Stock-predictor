@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:stock_predictor/firebase_options.dart';
 import 'package:stock_predictor/screens/LoginPage/LoginPage.dart';
 import 'package:stock_predictor/screens/homeScreen/homeScreen.dart';
+import 'package:stock_predictor/symbols/company_symbols.dart';
+import 'package:stock_predictor/globals/globals.dart' as globals;
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -12,6 +14,10 @@ class Auth extends StatelessWidget {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    final companySymbols = await getCompanySymbols();
+
+    globals.createSymbolsMap(companySymbols);
 
     final user = FirebaseAuth.instance.currentUser;
 

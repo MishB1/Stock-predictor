@@ -4,7 +4,7 @@ import 'package:stock_predictor/models/news_model.dart';
 import 'package:stock_predictor/news/news.dart';
 import 'package:stock_predictor/screens/MarketTrends/marketTrends.dart';
 import 'package:stock_predictor/screens/NavBar/NavBar.dart';
-import 'package:stock_predictor/screens/News/news.dart';
+import 'package:stock_predictor/screens/Stocks/trending_stocks.dart';
 import 'package:stock_predictor/screens/SettingsPage/settings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -96,7 +96,7 @@ class _AppState extends State<HomeScreen> {
     ];
 
     List<Widget> pages = [
-      NewsScreen(),
+      TrendingStocks(),
       MarketTrends(colors: colors, news: news, favoriteStocks: favoriteStocks),
       SettingsPage(),
     ];
