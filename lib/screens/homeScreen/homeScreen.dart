@@ -52,7 +52,11 @@ class _AppState extends State<HomeScreen> {
   ];
 
   setNews() async {
-    news = await getTopNews();
+    final res = await getTopNews();
+
+    setState(() {
+      news = res;
+    });
   }
 
   setPageIndex() {
