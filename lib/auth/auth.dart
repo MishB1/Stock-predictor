@@ -17,9 +17,13 @@ class Auth extends StatelessWidget {
 
     final companySymbols = await getCompanySymbols();
 
+    globals.companies = companySymbols;
+
     globals.createSymbolsMap(companySymbols);
 
     final user = FirebaseAuth.instance.currentUser;
+
+    globals.user = user;
 
     return user;
   }
