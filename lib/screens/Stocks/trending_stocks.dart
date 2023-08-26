@@ -43,13 +43,11 @@ class _TrendingStocksState extends State<TrendingStocks> {
       body: ListView.builder(
           itemCount: stocks?[0].quotes.length,
           itemBuilder: (context, index) {
-            return stocks == null
-                ? Container()
-                : ListTile(
-                    title:
-                        Text(getCompanyName(stocks![0].quotes[index].symbol)),
-                    subtitle: Text(stocks![0].quotes[index].symbol),
-                  );
+            return ListTile(
+              title:
+                  Text(getCompanyName(stocks?[0].quotes[index].symbol ?? '')),
+              subtitle: Text(stocks?[0].quotes[index].symbol ?? ''),
+            );
           }),
     );
   }
