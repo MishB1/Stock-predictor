@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:stock_predictor/globals/globals.dart' as globals;
+import 'package:stock_predictor/screens/LoginPage/LoginPage.dart';
 import 'package:stock_predictor/screens/Notificattions/notifications.dart';
 import 'package:stock_predictor/screens/UpdatesPage/updates.dart';
 import 'package:stock_predictor/screens/about/aboutScreen.dart';
@@ -15,34 +16,17 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool isDarkModeOn = false;
   String shareText = 'Check out the Stock Prediction App! 📈🚀';
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+
+  void signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
   void initState() {
     super.initState();
-    // _loadDarkModeSetting();
   }
-
-  // _loadDarkModeSetting() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     isDarkModeOn = prefs.getBool('darkMode') ?? false;
-  //   });
-  // }
-
-  // _toggleDarkMode(bool value) {
-  //   setState(() {
-  //     isDarkModeOn = value;
-  //   });
-  //   _saveDarkModeSetting(value);
-  // }
-
-  // _saveDarkModeSetting(bool value) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool('darkMode', value);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +171,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icons.exit_to_app,
                 color: Colors.black,
               ),
-              title: Text('SignOut'),
-              onTap: signOut,
+              title: Text('Sign Out'),
+              onTap: () => signOut(context),
             ),
           ],
         ),

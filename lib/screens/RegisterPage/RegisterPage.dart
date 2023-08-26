@@ -48,7 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pop(context);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(
+                  pageIndex: 1,
+                )),
         (route) => false,
       );
     } on FirebaseAuthException catch (error) {
