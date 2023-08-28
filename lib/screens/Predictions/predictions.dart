@@ -20,12 +20,14 @@ class _PredictionsState extends State<Predictions> {
   String symbol = '';
   String range = 'days';
   bool showChart = false;
+  bool isLoading = false;
   List<Prediction> predictions = [];
   TextEditingController number = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -138,80 +140,87 @@ class _PredictionsState extends State<Predictions> {
             SizedBox(
               height: 30,
             ),
-            predictions.isNotEmpty
-                ? Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+            isLoading
+                ? Center(child: CircularProgressIndicator())
+                : predictions.isNotEmpty
+                    ? Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text('Show Graph'),
-                            SizedBox(
-                              width: 20,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text('Show Graph'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Switch(
+                                    value: showChart,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        showChart = value;
+                                      });
+                                    }),
+                              ],
                             ),
-                            Switch(
-                                value: showChart,
-                                onChanged: (value) {
-                                  setState(() {
-                                    showChart = value;
-                                  });
-                                }),
+                            showChart
+                                ? Container(
+                                    child: SfCartesianChart(
+                                      primaryXAxis: CategoryAxis(
+                                          interactiveTooltip:
+                                              InteractiveTooltip()),
+                                      series: <ChartSeries>[
+                                        // Renders line chart
+                                        FastLineSeries<Prediction, String>(
+                                            dataSource: predictions,
+                                            xValueMapper:
+                                                (Prediction prediction, _) =>
+                                                    prediction.day,
+                                            yValueMapper:
+                                                (Prediction prediction, _) =>
+                                                    prediction.prediction)
+                                      ],
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: SingleChildScrollView(
+                                    child: Table(
+                                      border: TableBorder.all(),
+                                      children: predictions
+                                          .map(
+                                            (prediction) => TableRow(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(prediction.day),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      '${prediction.prediction}'),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                  )),
                           ],
                         ),
-                        showChart
-                            ? Container(
-                                child: SfCartesianChart(
-                                  primaryXAxis: CategoryAxis(
-                                      interactiveTooltip: InteractiveTooltip()),
-                                  series: <ChartSeries>[
-                                    // Renders line chart
-                                    FastLineSeries<Prediction, String>(
-                                        dataSource: predictions,
-                                        xValueMapper:
-                                            (Prediction prediction, _) =>
-                                                prediction.day,
-                                        yValueMapper:
-                                            (Prediction prediction, _) =>
-                                                prediction.prediction)
-                                  ],
-                                ),
-                              )
-                            : Expanded(
-                                child: SingleChildScrollView(
-                                child: Table(
-                                  border: TableBorder.all(),
-                                  children: predictions
-                                      .map(
-                                        (prediction) => TableRow(
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(prediction.day),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                  '${prediction.prediction}'),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              )),
-                      ],
-                    ),
-                  )
-                : Text('Prediction could not be made'),
+                      )
+                    : Text('Prediction could not be made'),
             SizedBox(
               height: 30,
             ),
             MyButton(
               text: 'Predict',
               onTap: () async {
+                setState(() {
+                  predictions = [];
+                  isLoading = true;
+                });
                 DateTime currentDate = DateTime.now();
                 DateTime startDate = range == 'days'
                     ? DateTime(currentDate.year, currentDate.month,
@@ -228,8 +237,11 @@ class _PredictionsState extends State<Predictions> {
                 final response =
                     await getPredictions(symbol: symbol, startDate: startDate);
 
+                setState(() {
+                  isLoading = false;
+                });
+
                 final difference = DateTime.now().difference(startDate);
-                print(difference.inDays);
 
                 if (response.isNotEmpty && response.length != difference.inDays)
                   buildToastNotification(

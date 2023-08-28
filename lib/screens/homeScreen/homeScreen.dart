@@ -20,8 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _AppState extends State<HomeScreen> {
-  // final _textController = TextEditingController();
-
   int currentIndex = 0;
 
   List<News>? news;

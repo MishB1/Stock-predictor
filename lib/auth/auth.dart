@@ -36,7 +36,7 @@ class Auth extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return snapshot.data != null
                 ? HomeScreen(
-                    pageIndex: 1,
+                    pageIndex: 2,
                   )
                 : LoginPage();
           }
