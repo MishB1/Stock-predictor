@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stock_predictor/components/loginButton.dart';
+import 'package:stock_predictor/components/toastNotifications.dart';
 
 import 'package:stock_predictor/models/symbols_models.dart';
 import 'package:stock_predictor/globals/globals.dart' as globals;
@@ -73,8 +74,9 @@ class _PredictionsState extends State<Predictions> {
                       });
                     },
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Stock Symbol(AAPL)'),
+                      border: InputBorder.none,
+                      hintText: 'Stock Symbol(AAPL)',
+                    ),
                   ),
                 );
               },
@@ -135,12 +137,18 @@ class _PredictionsState extends State<Predictions> {
             ),
             predictions.isNotEmpty
                 ? Expanded(
-                    child: ListView.builder(
-                      itemCount: predictions.length,
-                      itemBuilder: (context, index) =>
-                          Text('${predictions[index]}'),
+                    child: SingleChildScrollView(
+                    child: Table(
+                      children: predictions
+                          .map((prediction) => TableRow(children: [
+                                Text(
+                                  'Day ${predictions.indexOf(prediction) + 1}',
+                                ),
+                                Text('$prediction'),
+                              ]))
+                          .toList(),
                     ),
-                  )
+                  ))
                 : Text('Prediction could not be made'),
             SizedBox(
               height: 30,
@@ -163,7 +171,14 @@ class _PredictionsState extends State<Predictions> {
                             : DateTime.now();
                 final response =
                     await getPredictions(symbol: symbol, startDate: startDate);
-                print(response);
+
+                final difference = DateTime.now().difference(startDate);
+                print(difference.inDays);
+
+                if (response.isNotEmpty && response.length != difference.inDays)
+                  buildToastNotification(
+                    remainingDays: difference.inDays - response.length,
+                  );
                 setState(() {
                   predictions = response;
                 });

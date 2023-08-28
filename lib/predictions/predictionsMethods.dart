@@ -12,7 +12,6 @@ Future<List<HistoricalData>> getHistoricalData(
   if (startDate != null) {
     String endDate =
         '${DateTime.now().year}-${DateTime.now().month >= 10 ? DateTime.now().month : '0${DateTime.now().month}'}-${DateTime.now().day >= 10 ? DateTime.now().day : '0${DateTime.now().day}'}';
-    print(startDate);
     url =
         'https://api.stockdata.org/v1/data/eod?symbols=$symbol&date_from=$startDate&date_to=$endDate&api_token=${secrets.predictionsApiKey}';
   }
@@ -49,7 +48,6 @@ Future<List<num>> getPredictions(
     headers: {'content-type': 'application/json', 'accept': 'application/json'},
   );
 
-  print(response.body);
   if (response.statusCode != 200) return [];
 
   final body = jsonDecode(response.body);
