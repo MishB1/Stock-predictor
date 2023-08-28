@@ -11,8 +11,8 @@ Future<List<HistoricalData>> getHistoricalData(
 
   if (startDate != null) {
     String endDate =
-        '${DateTime.now().year}-${DateTime.now().month >= 10 ? DateTime.now().month : '0${DateTime.now().month}'}-${DateTime.now().day}';
-    print(endDate);
+        '${DateTime.now().year}-${DateTime.now().month >= 10 ? DateTime.now().month : '0${DateTime.now().month}'}-${DateTime.now().day >= 10 ? DateTime.now().day : '0${DateTime.now().day}'}';
+    print(startDate);
     url =
         'https://api.stockdata.org/v1/data/eod?symbols=$symbol&date_from=$startDate&date_to=$endDate&api_token=${secrets.predictionsApiKey}';
   }
@@ -34,12 +34,12 @@ Future<List<num>> getPredictions(
   final historicalData = await getHistoricalData(
     symbol: symbol,
     startDate:
-        '${startDate.year}-${startDate.month >= 10 ? startDate.month : '0${startDate.month}'}-${startDate.day}',
+        '${startDate.year}-${startDate.month >= 10 ? startDate.month : '0${startDate.month}'}-${startDate.day >= 10 ? startDate.day : '0${startDate.day}'}',
   );
 
   List<String> dates = historicalData
       .map((data) =>
-          '${data.date.year}-${data.date.month >= 10 ? data.date.month : '0${data.date.month}'}-${data.date.day}')
+          '${data.date.year}-${data.date.month >= 10 ? data.date.month : '0${data.date.month}'}-${data.date.day > 9 ? data.date.day : '0${data.date.day}'}')
       .toList();
   List<num> close = historicalData.map((data) => data.close).toList();
 
