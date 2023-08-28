@@ -17,6 +17,7 @@ dependencies:
   firebase_auth: ^4.7.2
   http: ^1.1.0
   fluttertoast: ^8.2.2
+  syncfusion_flutter_charts: ^22.2.10
 
 dev_dependencies:
   flutter_test:
