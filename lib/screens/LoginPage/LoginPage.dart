@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(
             builder: (context) => HomeScreen(
-                  pageIndex: 1,
+                  pageIndex: 2,
                 )),
         (route) => false,
       );

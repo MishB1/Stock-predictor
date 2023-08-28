@@ -4,6 +4,8 @@ import 'package:stock_predictor/models/news_model.dart';
 import 'package:stock_predictor/news/news.dart';
 import 'package:stock_predictor/screens/MarketTrends/marketTrends.dart';
 import 'package:stock_predictor/screens/NavBar/NavBar.dart';
+import 'package:stock_predictor/screens/Notificattions/notifications.dart';
+import 'package:stock_predictor/screens/Predictions/predictions.dart';
 import 'package:stock_predictor/screens/Stocks/trending_stocks.dart';
 import 'package:stock_predictor/screens/SettingsPage/settings.dart';
 
@@ -82,14 +84,32 @@ class _AppState extends State<HomeScreen> {
             : Image.asset('assets/images/hot_pick_unselected.png'),
       ),
       BottomNavigationBarItem(
-        label: 'Home',
+        label: 'Predictions',
         icon: currentIndex == 1
+            ? Image.asset('assets/images/predictions_selected.png')
+            : Image.asset('assets/images/predictions_unselected.png'),
+      ),
+      BottomNavigationBarItem(
+        label: 'Home',
+        icon: currentIndex == 2
             ? Image.asset('assets/images/home_selected.png')
             : Image.asset('assets/images/home_unselected.png'),
       ),
       BottomNavigationBarItem(
+        label: 'Notifications',
+        icon: currentIndex == 3
+            ? Icon(
+                Icons.notifications,
+                color: Colors.black,
+              )
+            : Icon(
+                Icons.notifications_outlined,
+                color: Colors.black,
+              ),
+      ),
+      BottomNavigationBarItem(
         label: 'Settings',
-        icon: currentIndex == 2
+        icon: currentIndex == 4
             ? Image.asset('assets/images/settings_selected.png')
             : Image.asset('assets/images/settings_unselected.png'),
       ),
@@ -97,13 +117,13 @@ class _AppState extends State<HomeScreen> {
 
     List<Widget> pages = [
       TrendingStocks(),
+      Predictions(),
       MarketTrends(colors: colors, news: news, favoriteStocks: favoriteStocks),
+      NotificationsScreen(),
       SettingsPage(),
     ];
     return Scaffold(
       backgroundColor: Colors.white,
-      // resizeToAvoidBottomInset: false,
-      // drawer: NavBar(),
       body: pages.elementAt(currentIndex),
       bottomNavigationBar: BottomNavBar(
           items: navBarItems,

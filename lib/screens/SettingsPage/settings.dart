@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:stock_predictor/globals/globals.dart' as globals;
 import 'package:stock_predictor/screens/LoginPage/LoginPage.dart';
-import 'package:stock_predictor/screens/Notificattions/notifications.dart';
 import 'package:stock_predictor/screens/UpdatesPage/updates.dart';
 import 'package:stock_predictor/screens/about/aboutScreen.dart';
 
@@ -100,23 +99,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               title: Text('Favorites'),
               onTap: () {},
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.notifications_outlined,
-                color: Colors.black,
-              ),
-              title: Text('Notifications'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => NotificationsScreen()),
-                );
-              },
             ),
             SizedBox(
               height: 10,

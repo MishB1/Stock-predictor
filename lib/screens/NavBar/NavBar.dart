@@ -21,6 +21,7 @@ class BottomNavBar extends StatelessWidget {
       showUnselectedLabels: false,
       backgroundColor: Colors.white,
       selectedItemColor: Colors.black,
+      type: BottomNavigationBarType.fixed,
     );
   }
 }

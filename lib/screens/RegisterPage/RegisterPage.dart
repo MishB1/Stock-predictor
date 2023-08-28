@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
         context,
         MaterialPageRoute(
             builder: (context) => HomeScreen(
-                  pageIndex: 1,
+                  pageIndex: 2,
                 )),
         (route) => false,
       );
