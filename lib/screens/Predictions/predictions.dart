@@ -4,6 +4,7 @@ import 'package:stock_predictor/components/loginButton.dart';
 
 import 'package:stock_predictor/models/symbols_models.dart';
 import 'package:stock_predictor/globals/globals.dart' as globals;
+import 'package:stock_predictor/predictions/predictionsMethods.dart';
 
 class Predictions extends StatefulWidget {
   const Predictions({super.key});
@@ -14,6 +15,8 @@ class Predictions extends StatefulWidget {
 
 class _PredictionsState extends State<Predictions> {
   String range = 'days';
+  String symbol = '';
+  List<num> predictions = [];
   TextEditingController number = TextEditingController();
 
   @override
@@ -31,6 +34,12 @@ class _PredictionsState extends State<Predictions> {
         child: Column(
           children: [
             Autocomplete<String>(
+              onSelected: (option) {
+                setState(() {
+                  symbol = option;
+                });
+                print(symbol);
+              },
               optionsBuilder: (textEditingValue) {
                 final search = textEditingValue.text;
                 if (search == '') {
@@ -58,6 +67,11 @@ class _PredictionsState extends State<Predictions> {
                     controller: textEditingController,
                     textCapitalization: TextCapitalization.characters,
                     onSubmitted: (_) => onFieldSubmitted(),
+                    onChanged: (value) {
+                      setState(() {
+                        symbol = value;
+                      });
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Stock Symbol(AAPL)'),
@@ -119,7 +133,42 @@ class _PredictionsState extends State<Predictions> {
             SizedBox(
               height: 30,
             ),
-            MyButton(onTap: () {}, text: 'Predict'),
+            predictions.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: predictions.length,
+                      itemBuilder: (context, index) =>
+                          Text('${predictions[index]}'),
+                    ),
+                  )
+                : Text('Prediction could not be made'),
+            SizedBox(
+              height: 30,
+            ),
+            MyButton(
+              text: 'Predict',
+              onTap: () async {
+                DateTime currentDate = DateTime.now();
+                DateTime startDate = range == 'days'
+                    ? DateTime(currentDate.year, currentDate.month,
+                        currentDate.day - int.parse(number.text))
+                    : range == 'weeks'
+                        ? DateTime(currentDate.year, currentDate.month,
+                            currentDate.day - int.parse(number.text) * 7)
+                        : range == 'months'
+                            ? DateTime(
+                                currentDate.year,
+                                currentDate.month - int.parse(number.text),
+                                currentDate.day)
+                            : DateTime.now();
+                final response =
+                    await getPredictions(symbol: symbol, startDate: startDate);
+                print(response);
+                setState(() {
+                  predictions = response;
+                });
+              },
+            ),
           ],
         ),
       ),
